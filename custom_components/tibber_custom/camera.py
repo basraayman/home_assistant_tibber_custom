@@ -1,7 +1,6 @@
 import datetime
 import logging
 from pathlib import Path
-
 from PIL import Image, ImageDraw, ImageFont
 from dateutil import tz
 from homeassistant.components.local_file.camera import LocalFile
@@ -17,7 +16,6 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 RED = (255, 0, 0)
 BLUE = (3, 155, 229)
-LIGHT_BLUE = (99, 193, 232, 150)  # Transparent blue
 
 async def async_setup_platform(hass, config, async_add_entities, discovery_info=None):
     Path(hass.config.path("www/")).mkdir(parents=True, exist_ok=True)
@@ -28,7 +26,6 @@ async def async_setup_platform(hass, config, async_add_entities, discovery_info=
             await home.update_info()
         dev.append(TibberCam(home, hass))
     async_add_entities(dev)
-
 
 class TibberCam(LocalFile):
     def __init__(self, home, hass):
@@ -146,5 +143,9 @@ class TibberCam(LocalFile):
             if i % 2 == 0:  # reduce clutter by only annotating every other point
                 draw.text((scale_x(date), scale_y(price) - 15), f"{price:.2f}", fill=BLACK, font=font)
 
-        # Save the image
+        # Save the image asynchronously
+        await self.hass.async_add_executor_job(self._save_image, img)
+
+    def _save_image(self, img):
+        """Save the image to the file system."""
         img.save(self._path)
