@@ -2,7 +2,9 @@
 [![GitHub Release][releases-shield]][releases]
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/custom-components/hacs)
 
-This is a fork of: https://github.com/Danielhiversen/home_assistant_tibber_custom in an attempt to rewrite the code and leverage pillow instead of matplotlib.
+This is a fork of: https://github.com/Danielhiversen/home_assistant_tibber_custom in an attempt to rewrite the code and leverage pillow instead of matplotlib. The idea for this and all of the original code belongs to him, I just modified it so that it works with a different plotting library.
+
+------
 
 Display Tibber prices and your consumption as a graph.
 Tibber is available in Germany, Norway and Sweden
